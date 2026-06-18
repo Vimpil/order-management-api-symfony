@@ -1,15 +1,18 @@
-# Tile Expert Order Management Application
+# Tile Expert Order Management System
 
-This is a Symfony 7.2 application that provides endpoints for retrieving tile prices, managing orders, and searching orders with Manticore Search. The application is containerized with Docker Compose and includes comprehensive PHPUnit tests, a MySQL database, and Manticore Search integration.
+This is a Symfony 7.2 backend system for order processing, price retrieval, and full-text search.  
+The system is fully containerized using Docker Compose and integrates MySQL, Manticore Search, and a PHPUnit test suite.
 
-## 🎯 For MLH Reviewers
+It demonstrates production-style backend architecture, including external API integration, deterministic testing, and failure-resilient service design.
 
-**Quick verification (requires Docker):**
+---
+
+## System Verification
+
+Run the full test suite in a containerized environment:
+
 ```bash
 docker compose run --rm --no-deps php php vendor/bin/phpunit --testdox
-```
-
-**Expected result:** 11 tests, 65 assertions, all passing in <4s.
 
 **What was accomplished:** Test suite stabilization — isolated controllers with mocked services, removed kernel dependencies, added negative-path coverage. See [`PORTFOLIO_SUMMARY.md`](PORTFOLIO_SUMMARY.md) for full technical details and impact.
 
