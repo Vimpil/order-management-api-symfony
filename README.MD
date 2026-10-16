@@ -1,5 +1,7 @@
 # Tile Expert Order Management System
 
+[![PHPUnit Tests](https://github.com/Vimpil/order-management-api-symfony/actions/workflows/tests.yml/badge.svg)](https://github.com/Vimpil/order-management-api-symfony/actions/workflows/tests.yml)
+
 This is a Symfony 7.2 backend system for order processing, price retrieval, and full-text search.  
 The system is fully containerized using Docker Compose and integrates MySQL, Manticore Search, and a PHPUnit test suite.
 
@@ -65,8 +67,8 @@ docker compose run --rm --no-deps php php vendor/bin/phpunit tests/Controller/Pr
 ### 1. Clone the Repository
 
 ```sh
-git clone https://github.com/Vimpil/tileExpertMiddlePHPtestTask.git
-cd tileExpertMiddlePHPtestTask
+git clone https://github.com/Vimpil/order-management-api-symfony.git
+cd order-management-api-symfony
 ```
 
 ### 2. Configure Environment Variables
@@ -148,7 +150,7 @@ If you prefer to install dependencies directly on your host machine:
 2. **Install project dependencies:**
    ```sh
    # Navigate to your project directory if needed
-   cd /path/to/tileExpertMiddlePHPtestTask
+   cd /path/to/order-management-api-symfony
    
    # Install dependencies
    composer install
@@ -412,7 +414,7 @@ The application is accessible at [http://localhost:8080](http://localhost:8080) 
 ## Project Structure
 
 ```
-tileExpertMiddlePHPtestTask/
+order-management-api-symfony/
 |-- docker-compose.yml
 |-- Dockerfile
 |-- src/
@@ -488,4 +490,4 @@ tileExpertMiddlePHPtestTask/
 ## Contributing
 
 Submit issues or pull requests to the GitHub repository:  
-https://github.com/Vimpil/tileExpertMiddlePHPtestTask/
+https://github.com/Vimpil/order-management-api-symfony/
