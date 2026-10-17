@@ -13,6 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Composer dependencies
+      run: composer install --no-interaction --prefer-dist --no-scripts --ignore-platform-req=ext-soap
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
