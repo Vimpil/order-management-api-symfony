@@ -25,3 +25,6 @@
 *.cache
 
 
+
+# Runtime search index data (Manticore volume)
+/manticore_data/

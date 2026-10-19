@@ -1,24 +1,29 @@
-# Tile Expert Order Management System
+# Order Management API (Symfony)
 
 [![PHPUnit Tests](https://github.com/Vimpil/order-management-api-symfony/actions/workflows/tests.yml/badge.svg)](https://github.com/Vimpil/order-management-api-symfony/actions/workflows/tests.yml)
 
-This is a Symfony 7.2 backend system for order processing, price retrieval, and full-text search.  
-The system is fully containerized using Docker Compose and integrates MySQL, Manticore Search, and a PHPUnit test suite.
+A Symfony 7.2 backend for order processing, price retrieval and full-text search. It is a technical-assignment project (a tile-ordering domain), not a production system. It runs under Docker Compose with MySQL and Manticore Search, and has a PHPUnit suite.
 
-It demonstrates production-style backend architecture, including external API integration, deterministic testing, and failure-resilient service design.
+It shows external-API integration with a controlled failure mode, XML request handling, paginated aggregate queries and mocked-service controller tests.
 
----
+## Tests
 
-## System Verification
-
-Run the full test suite in a containerized environment:
+The default suite consists of controller-level tests with mocked dependencies (Doctrine, the search service, the DB connection and the validator). It needs neither a running MySQL nor Manticore.
 
 ```bash
 docker compose run --rm --no-deps php php vendor/bin/phpunit --testdox
+```
 
-**What was accomplished:** Test suite stabilization — isolated controllers with mocked services, removed kernel dependencies, added negative-path coverage. See [`PORTFOLIO_SUMMARY.md`](PORTFOLIO_SUMMARY.md) for full technical details and impact.
+This requires dependencies to be installed (`composer install`; see Setup). Outside Docker you need PHP 8.3+ because the project uses PHPUnit 12.
 
-**Price endpoint hardening:** The `/price` endpoint now reads its upstream URL and timeout from `PRICE_BASE_URL` and `PRICE_HTTP_TIMEOUT`, and it returns a controlled JSON fallback when the external provider is unavailable instead of a 503.
+Focused runs:
+
+```bash
+php vendor/bin/phpunit tests/Controller/OrderControllerTest.php
+php vendor/bin/phpunit tests/Controller/PriceControllerTest.php
+```
+
+The `/price` endpoint reads its upstream URL and timeout from `PRICE_BASE_URL` and `PRICE_HTTP_TIMEOUT`. When the provider is unavailable it returns a JSON fallback body instead of an error status (see Endpoint #1).
 
 ## Features
 
@@ -28,7 +33,7 @@ docker compose run --rm --no-deps php php vendor/bin/phpunit --testdox
 - **Endpoint #4:** Retrieve a single order by ID.
 - **Search Endpoint:** Search orders using Manticore Search.
 - MySQL database for orders and order articles.
-- PHPUnit tests for all endpoints.
+- PHPUnit controller tests with mocked dependencies (see Tests).
 - Docker Compose setup with configurable ports.
 - **Reference:** An improved database schema is included in `docker/mysql/improved_schema.sql` for informational purposes only (not used by the application).
 
@@ -56,6 +61,7 @@ For a focused controller run:
 docker compose run --rm --no-deps php php vendor/bin/phpunit tests/Controller/OrderControllerTest.php
 docker compose run --rm --no-deps php php vendor/bin/phpunit tests/Controller/PriceControllerTest.php
 ```
+
 ## Prerequisites
 
 - Docker and Docker Compose
@@ -291,6 +297,8 @@ The application is accessible at [http://localhost:8080](http://localhost:8080) 
   ```
 
 ### Endpoint #3: Save Orders via XML
+
+> The route is named `/soap`, but it accepts a plain XML document with `Content-Type: application/xml`, parsed with SimpleXML. It is not a SOAP service: there is no WSDL and no SOAP envelope handling.
 
 - **Method:** POST
 - **URL:** `/soap`
